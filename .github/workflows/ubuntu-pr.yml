@@ -1,14 +1,11 @@
-name: '2.x: Linux - Build ce_dev binaries, images and templates (test)'
+name: '2.x: Ubuntu - Test image builds on PR'
 
 on:
-  push:
-    branches:
-      - 2.x-devel
   pull_request:
     types:
       - opened
     branches:
-      - 2.x-devel
+      - 2.x
 
 jobs:
   build:
@@ -16,11 +13,11 @@ jobs:
     steps:
       - uses: actions/checkout@v4
         with:
-          ref: '2.x-devel'
+          ref: '2.x'
       - name: Install modules
         run: yarn install --production=false --global
       - name: Pack the JS
-        run: yarn oclif pack tarballs --targets=linux-x64,linux-arm,linux-arm64 --no-xz
+        run: yarn oclif pack tarballs --targets=linux-x64,linux-arm,linux-arm64,darwin-x64,darwin-arm64 --no-xz
       - name: Rename the dist/* files
         run: yarn renamedist
       # We build mkcert from source because releases are broken
@@ -44,9 +41,9 @@ jobs:
           echo 'mkcert_bin: mkcert' >> ~/.config/ce-dev/preferences-2.x.yml
       - name: Build ce-dev and ce-dev-controller
         run: |
-          /bin/sh docker-images/export.sh --version 2.x-devel --image-name ce-dev --dockerfile-path base-devel
-          /bin/sh docker-images/export.sh --version 2.x-devel --image-name ce-dev-controller --dockerfile-path controller-devel
+          /bin/sh docker-images/export.sh --version 2.x --image-name ce-dev --dockerfile-path base
+          /bin/sh docker-images/export.sh --version 2.x --image-name ce-dev-controller --dockerfile-path controller
       - name: Testing templates
         run: |
-          sudo chmod +x bin/dev.js
-          /bin/sh templates/prebuild.sh --template ce-dev-devel.compose.yml --devel
+          sudo chmod +x bin/run.js
+          /bin/sh templates/prebuild.sh --template ce-dev.compose.yml
