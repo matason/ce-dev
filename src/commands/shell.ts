@@ -25,7 +25,7 @@ export default class ShellCmd extends BaseCmd {
 
   async run(): Promise<void> {
     this.ensureActiveComposeFile()
-    const { args} = await this.parse(ShellCmd)
+    const { args } = await this.parse(ShellCmd)
     let { container } = args
     if (!container) {
       const running = this.getProjectRunningContainersCeDev()
@@ -48,6 +48,6 @@ export default class ShellCmd extends BaseCmd {
       }
     }
 
-    execSync(this.dockerBin + ' exec -it -u ce-dev -w /home/ce-dev ' + container + ' sudo su ce-dev || exit 0', {stdio: 'inherit'})
+    execSync(this.dockerBin + ' exec -it -u ce-dev -w /home/ce-dev ' + container + ' /bin/bash || exit 0', {stdio: 'inherit'})
   }
 }
