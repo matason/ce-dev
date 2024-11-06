@@ -9,4 +9,7 @@
 * src folder has been organised a bit better.
 * Removed drupal 8 and drupal 9 templates.
 * The way to assign IPs have changed.
+* Improved command 'shell'
+* Added new command 'drush'
+* Removed references to win-x
 * All the packages used are up to date.
