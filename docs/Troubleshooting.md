@@ -63,7 +63,7 @@ docker rm $(docker ps -aq)
 ### Arch Linux
 1 - Edit `/boot/loader/entries/XXXX-XX-XX_XX-XX-XX_linux.conf` and append `SYSTEMD_CGROUP_ENABLE_LEGACY_FORCE=1 systemd.unified_cgroup_hierarchy=0` to `options`
 
-2 -  Reboot
+2 - Reboot
 
 ### Cgroup On Older Projects
 
